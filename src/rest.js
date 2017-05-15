@@ -3,10 +3,13 @@
 
   Base.$inject = ['$http', '$q'];
   function Base($http, $q) {
-    function RestPrototype(url) {
+
+    function RestPrototype(url, pageSize = 10) {
+      this.pageSize = pageSize;
       this._url = url;
-      this._query = { params: { start: 0, pageSize: 10 } };
+      this._query = { params: { start: 0, pageSize: this.pageSize } };
     }
+
     RestPrototype.prototype.get = _get;
     RestPrototype.prototype.resetAndGet = _resetAndGet;
     RestPrototype.prototype.getNew = _getNew;
@@ -31,12 +34,14 @@
     RestPrototype.prototype.extend = _extend;
     RestPrototype.prototype.getDocumentationURL = getDocumentationURL
 
-    function _get(page) {
+    function _get(page, pageSize) {
+      let query = angular.copy(this._query);
+      query.params.pageSize = pageSize || query.params.pageSize;
       if (page) {
-        this._query.params.start = (page - 1) * this._query.params.pageSize;
+        query.params.start = (page - 1) * query.params.pageSize;
         if (page < 1) throw 'Invalid page';
       }
-      return $http.get(this._url, this._query);
+      return $http.get(this._url, query);
     }
     function _getNew() {
       return $http.get(this._url + '/new')
@@ -54,11 +59,12 @@
     function _delete(v) {
       return $http.delete(this._url + '/' + v.id);
     }
+
     function _resetQuery() {
       this._query = {
         params: {
           start: 0,
-          pageSize: 10
+          pageSize: this.pageSize
         }
       };
     }
