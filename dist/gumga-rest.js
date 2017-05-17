@@ -78,10 +78,13 @@
       this.resetDefaultState();
       return $http.get(this._url, this._query);
     }
-    function _sort(f, w) {
+    function _sort(f, w, pageSize) {
       this.resetDefaultState();
       this._query.params.sortField = f;
       this._query.params.sortDir = w;
+      if (pageSize) {
+        this._query.params.pageSize = pageSize;
+      }
       return $http.get(this._url, this._query);
     }
     function _deleteCollection(arr) {
@@ -106,14 +109,17 @@
         headers: { 'Content-Type': undefined }
       });
     }
-    function _getSearch(f, p) {
+    function _getSearch(f, p, pageSize) {
       this.resetDefaultState();
       !p ? p = '' : angular.noop;
       this._query.params.q = p;
       this._query.params.searchFields = f;
+      if (pageSize) {
+        this._query.params.pageSize = pageSize;
+      }
       return this.get();
     }
-    function _getAdvancedSearch(p) {
+    function _getAdvancedSearch(p, pageSize) {
       this.resetDefaultState();
       if (typeof p === 'string') {
         this._query.params.aq = p;
@@ -121,6 +127,9 @@
       }
       this._query.params.aq = p.hql;
       this._query.params.aqo = JSON.stringify(p.source);
+      if (pageSize) {
+        this._query.params.pageSize = pageSize;
+      }
       return $http.get(this._url, this._query);
     }
     function _getStateQuery() {
