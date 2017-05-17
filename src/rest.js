@@ -73,10 +73,13 @@
       this.resetDefaultState();
       return $http.get(this._url, this._query);
     }
-    function _sort(f, w) {
+    function _sort(f, w, pageSize) {
       this.resetDefaultState();
       this._query.params.sortField = f;
       this._query.params.sortDir = w;
+      if(pageSize){
+        this._query.params.pageSize = pageSize;
+      }
       return $http.get(this._url, this._query);
     }
     function _deleteCollection(arr) {
