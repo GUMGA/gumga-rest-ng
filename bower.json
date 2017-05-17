@@ -1,6 +1,6 @@
 {
-  "name": "gumga-rest",
-  "version": "1.1.0",
+  "name": "gumga-rest-ng",
+  "version": "1.1.1",
   "description": "Gumga Rest",
   "main": "./src/rest.js",
   "authors": [
