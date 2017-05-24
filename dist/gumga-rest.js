@@ -109,7 +109,7 @@
         headers: { 'Content-Type': undefined }
       });
     }
-    function _getSearch(f, p, pageSize) {
+    function _getSearch(f, p, pageSize, page) {
       this.resetDefaultState();
       !p ? p = '' : angular.noop;
       this._query.params.q = p;
@@ -117,9 +117,10 @@
       if (pageSize) {
         this._query.params.pageSize = pageSize;
       }
-      return this.get();
+
+      return this.get(page);
     }
-    function _getAdvancedSearch(p, pageSize) {
+    function _getAdvancedSearch(p, pageSize, page) {
       this.resetDefaultState();
       if (typeof p === 'string') {
         this._query.params.aq = p;
@@ -130,7 +131,11 @@
       if (pageSize) {
         this._query.params.pageSize = pageSize;
       }
-      return $http.get(this._url, this._query);
+      var query = angular.copy(this._query);
+      if (page) {
+        query.params.start = (page - 1) * query.params.pageSize;
+      }
+      return $http.get(this._url, query);
     }
     function _getStateQuery() {
       return this._query;
