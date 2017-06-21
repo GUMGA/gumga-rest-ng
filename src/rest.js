@@ -73,12 +73,15 @@
       this.resetDefaultState();
       return $http.get(this._url, this._query);
     }
-    function _sort(f, w, pageSize) {
+    function _sort(f, w, pageSize, page) {
       this.resetDefaultState();
       this._query.params.sortField = f;
       this._query.params.sortDir = w;
       if(pageSize){
         this._query.params.pageSize = pageSize;
+      }
+      if (page) {
+        this._query.params.start = (page - 1) * this._query.params.pageSize
       }
       return $http.get(this._url, this._query);
     }

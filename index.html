@@ -83,7 +83,7 @@
           var PessoaService = new GumgaRest('https://gumga.io/security-api/api/user');
           gumgaController.createRestMethods($scope, PessoaService, 'pessoa');
 
-          $scope.pessoa.methods.get($scope.page, 5);
+          $scope.pessoa.methods.getLatestOperation();
 
           $scope.tableConfig = {
           columns: 'id, name, login',
