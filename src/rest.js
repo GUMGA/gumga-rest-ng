@@ -74,7 +74,7 @@
       return $http.get(this._url, this._query);
     }
     function _sort(f, w, pageSize, page) {
-      this.resetDefaultState();
+      // this.resetDefaultState();
       this._query.params.sortField = f;
       this._query.params.sortDir = w;
       if(pageSize){
