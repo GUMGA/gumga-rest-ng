@@ -32,6 +32,7 @@
     RestPrototype.prototype.getAvailableTags = _getAvailableTags;
     RestPrototype.prototype.getSelectedTags = _getSelectedTags;
     RestPrototype.prototype.extend = _extend;
+    RestPrototype.prototype.searchWithGQuery = _searchWithGQuery;
     RestPrototype.prototype.getDocumentationURL = getDocumentationURL
 
     function _get(page, pageSize) {
@@ -115,7 +116,6 @@
       if(pageSize){
         this._query.params.pageSize = pageSize;
       }
-
       return this.get(page);
     }
     function _getAdvancedSearch(p, pageSize, page) {
@@ -149,6 +149,20 @@
         name: q.name
       };
       return $http.post(this._url + '/saq', _aux);
+    }
+
+    function _searchWithGQuery(gQuery, page, pageSize){
+      if(pageSize){
+        this._query.params.pageSize = pageSize;
+      }
+      if (page) {
+        this._query.params.start = (page - 1) * this._query.params.pageSize
+      }
+      return $http.post(this._url + '/gquery', {
+        pageSize: this._query.params.pageSize,
+        start: this._query.params.start,
+        gQuery: gQuery
+      })
     }
 
     function _getQuery(page) {
