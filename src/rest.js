@@ -120,12 +120,6 @@
     }
     function _getAdvancedSearch(p, pageSize, page) {
       this.resetDefaultState();
-      if (typeof p === 'string') {
-        this._query.params.aq = p;
-        return $http.get(this._url, this._query);
-      }
-      this._query.params.aq = p.hql;
-      this._query.params.aqo = JSON.stringify(p.source);
       if(pageSize){
         this._query.params.pageSize = pageSize;
       }
@@ -133,6 +127,12 @@
       if (page) {
         query.params.start = (page - 1) * query.params.pageSize
       }
+      if (typeof p === 'string') {
+        this._query.params.aq = p;
+        return $http.get(this._url, this._query);
+      }
+      this._query.params.aq = p.hql;
+      this._query.params.aqo = JSON.stringify(p.source);
       return $http.get(this._url, query);
     }
     function _getStateQuery() {
