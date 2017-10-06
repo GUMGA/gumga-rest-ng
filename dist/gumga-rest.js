@@ -210,6 +210,8 @@
       }
       this._query.params.aq = p.hql;
       this._query.params.aqo = JSON.stringify(p.source);
+      query.params.aqo = JSON.stringify(p.source);
+      query.params.aq = p.hql;
       return $http.get(this._url, query);
     }
     function _getStateQuery() {
