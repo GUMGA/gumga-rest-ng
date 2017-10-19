@@ -33,6 +33,7 @@
     RestPrototype.prototype.getSelectedTags = _getSelectedTags;
     RestPrototype.prototype.extend = _extend;
     RestPrototype.prototype.searchWithGQuery = _searchWithGQuery;
+    RestPrototype.prototype.sendQueryObject = _sendQueryObject;
     RestPrototype.prototype.getDocumentationURL = getDocumentationURL
 
     function _get(page, pageSize) {
@@ -165,6 +166,10 @@
         start: this._query.params.start,
         gQuery: gQuery
       })
+    }
+
+    function _sendQueryObject(queryObject){
+      return $http.post(this._url + '/gquery', queryObject);
     }
 
     function _getQuery(page) {
