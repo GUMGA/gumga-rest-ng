@@ -120,6 +120,7 @@
         query.params.start = (page - 1) * query.params.pageSize;
         if (page < 1) throw 'Invalid page';
       }
+      query.params.searchCount = page <= 1;
       return $http.get(this._url, query);
     }
     function _getNew() {
@@ -162,6 +163,7 @@
       if (page) {
         this._query.params.start = (page - 1) * this._query.params.pageSize;
       }
+      this._query.params.searchCount = page <= 1;
       return $http.get(this._url, this._query);
     }
     function _deleteCollection(arr) {
@@ -194,6 +196,7 @@
       if (pageSize) {
         this._query.params.pageSize = pageSize;
       }
+      _query.params.searchCount = page <= 1;
       return this.get(page);
     }
     function _getAdvancedSearch(p, pageSize, page) {
@@ -207,12 +210,14 @@
       }
       if (typeof p === 'string') {
         this._query.params.aq = p;
+        this._query.params.searchCount = page <= 1;
         return $http.get(this._url, this._query);
       }
       this._query.params.aq = p.hql;
       this._query.params.aqo = JSON.stringify(p.source);
       query.params.aqo = JSON.stringify(p.source);
       query.params.aq = p.hql;
+      query.params.searchCount = page <= 1;
       return $http.get(this._url, query);
     }
     function _getStateQuery() {
@@ -241,6 +246,7 @@
       return $http.post(this._url + '/gquery', {
         pageSize: this._query.params.pageSize,
         start: this._query.params.start,
+        searchCount: page <= 1,
         gQuery: gQuery
       });
     }
