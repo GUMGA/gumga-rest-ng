@@ -196,7 +196,7 @@
       if (pageSize) {
         this._query.params.pageSize = pageSize;
       }
-      _query.params.searchCount = page <= 1;
+      this._query.params.searchCount = page <= 1;
       return this.get(page);
     }
     function _getAdvancedSearch(p, pageSize, page) {
