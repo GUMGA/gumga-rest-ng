@@ -237,6 +237,7 @@
     }
 
     function isSelectInGQuery(gQuerys) {
+      if (!gQuerys[0]) return false;
       if (gQuerys[0] && gQuerys[0].selects && gQuerys[0].selects.length > 0) return true;
       if (gQuerys[0].subQuerys && gQuerys[0].subQuerys.length > 0) {
         return isSelectInGQuery(gQuerys[0].subQuerys);
