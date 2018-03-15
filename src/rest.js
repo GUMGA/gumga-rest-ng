@@ -160,7 +160,7 @@
     }
 
     function isSelectInGQuery(gQuerys){
-      if(!gQuerys[0]) return false;
+      if(gQuerys == null || gQuerys == undefined || !gQuerys[0]) return false;
       if(gQuerys[0] && gQuerys[0].selects && gQuerys[0].selects.length > 0) return true;      
       if(gQuerys[0].subQuerys && gQuerys[0].subQuerys.length > 0){
         return isSelectInGQuery(gQuerys[0].subQuerys);
@@ -179,7 +179,7 @@
       if (page) {
         this._query.params.start = (page - 1) * this._query.params.pageSize
       }
-      return $http.post(this._url + (isSelectInGQuery([gQuery]) ? '/v2' : '') +'/gquery', {
+      return $http.post(this._url + (isSelectInGQuery([angular.copy(gQuery)]) ? '/v2' : '') +'/gquery', {
         pageSize: this._query.params.pageSize,
         start: this._query.params.start,
         searchCount : page <= 1,
@@ -188,7 +188,7 @@
     }
 
     function _sendQueryObject(queryObject){
-      return $http.post(this._url + (isSelectInGQuery([gQuery]) ? '/v2' : '') +'/gquery', queryObject);
+      return $http.post(this._url + (isSelectInGQuery([angular.copy(gQuery)]) ? '/v2' : '') +'/gquery', queryObject);
     }
 
     function _getQuery(page) {
