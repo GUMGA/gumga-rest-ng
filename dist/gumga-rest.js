@@ -265,7 +265,7 @@
     }
 
     function _sendQueryObject(queryObject) {
-      return $http.post(this._url + (isSelectInGQuery([angular.copy(gQuery)]) ? '/v2' : '') + '/gquery', queryObject);
+      return $http.post(this._url + (isSelectInGQuery(queryObject && [angular.copy(queryObject.gQuery)]) ? '/v2' : '') + '/gquery', queryObject);
     }
 
     function _getQuery(page) {
